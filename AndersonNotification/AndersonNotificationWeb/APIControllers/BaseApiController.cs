@@ -2,7 +2,7 @@
 
 namespace AndersonNotificationWeb.ApiControllers
 {
-    public class BaseApiController :ExternalAccountBaseApiController
+    public class BaseApiController : ExternalAccountBaseApiController
     {
     }
 }

@@ -128,7 +128,7 @@ namespace AndersonNotificationFunction
                 CC = eemailnotification.CC,
                 NotificationId = eemailnotification.NotificationId,
                 Sender = eemailnotification.Sender,
-                CC = eemailnotification.CC,
+               
                 Receiver = eemailnotification.Receiver,
                 Subject = eemailnotification.Subject,
                 Body = eemailnotification.Body,
