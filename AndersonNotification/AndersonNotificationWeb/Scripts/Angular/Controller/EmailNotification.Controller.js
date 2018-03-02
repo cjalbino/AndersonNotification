@@ -12,13 +12,12 @@
 
         vm.EmailNotifications = [];
 
-        vm.GoToUpdatePage = GoToUpdatePage;
+        vm.disableTable = disableTable;
         vm.Initialise = Initialise;
 
-        function GoToUpdatePage(emailNotificationId) {
-            $window.location.href = '../EmailNotification/Update/' + emailNotificationId;
+        function disableTable(emailNotificationId) {
+            $element.bind('click', clearSelection)
         }
-
         function Initialise() {
             Read();
         }

@@ -79,7 +79,7 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="ExternalAccountWebAuthentication">
-      <HintPath>..\..\..\DLL\Release\AccountExternal\ExternalAccountWebAuthentication.dll</HintPath>
+      <HintPath>..\..\..\DLL\Debug\AccountExternal\ExternalAccountWebAuthentication.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
