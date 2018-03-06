@@ -1,0 +1,56 @@
+﻿@using AndersonNotificationModel
+@model EmailNotification
+
+<input type="hidden" name="NotificationId" value="@Model.NotificationId" />
+@{
+    Html.RenderPartial("_AuditColumns");
+}
+
+@{
+    if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+        alert(@Html.Raw(Json.Encode(TempData["message"])));
+        </script>
+    }
+}
+
+<div class="form-group">
+    <label for="Sender">From:</label>
+    <input type="email" class="form-control" name="Sender" placeholder="Sender's Email Address.." value="@Model.Sender" required>
+</div>
+
+<div class="form-group">
+    <label for="Password">Sender's Password</label>
+    <input type="password" class="form-control" name="Password" placeholder="Sender's Email Account Password.." required>
+</div>  
+
+<div class="form-group">
+    <label for="Receiver">To:</label>
+    <input type="email" class="form-control" name="Receiver" placeholder="Receiver's Email Address.." value="@Model.Receiver" required multiple>
+</div>
+
+<div class="form-group">
+    <label for="CC">CC:</label>
+    <input type="email" class="form-control" name="CC" placeholder="Sender's Email Address.." value="@Model.CC" multiple>
+</div>
+
+<div class="form-group">
+    <label for="Subject">Subject</label>
+    <input type="text" class="form-control" name="Subject" placeholder="Subject" value="@Model.Subject" required>
+</div>
+
+<div class="form-group">
+    <label for="Body">Email Content</label>
+    <textarea class="form-control" rows="10" name="Body" id="comment" placeholder="Message" required></textarea>
+</div>
+
+<div class="form-group">
+    <input type="submit" class  ="btn btn-primary" value="Submit" />
+</div>
+
+<style>
+    textarea {
+        resize: none;
+    }
+</style>

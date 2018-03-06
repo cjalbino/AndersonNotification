@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div ng-controller="EmailNotificationController as model" ng-init="model.Initialise()">
+    <div class="row">
+        <div class="col-sm-4">
+            <a href="../EmailNotification/Create" class="btn btn-default">Create</a>
+            <br /><br />
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover table-sm table-bordered ">
+                <thead>
+                    <tr class="thead-inverse">
+                        <th class="text-center">Notification ID</th>
+                        <th class="text-center">From</th>
+                        <th class="text-center">To</th>
+                        <th class="text-center">CC</th>
+                        <th class="text-center">Subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="emailnotification in model.EmailNotifications" ng-click="$event.originalEvent.dropdown || model.GoToUpdatePage(emailnotification.emailNotificationId)">
+                        <td class="text-center"><span ng-bind="emailnotification.NotificationId"></span></td>
+                        <td class="text-center"><span ng-bind="emailnotification.Sender"></span></td>
+                        <td class="text-center"><span ng-bind="emailnotification.Receiver"></span></td>
+                        <td class="text-center"><span ng-bind="emailnotification.CC"></span></td>
+                        <td class="text-center"><span ng-bind="emailnotification.Subject"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
