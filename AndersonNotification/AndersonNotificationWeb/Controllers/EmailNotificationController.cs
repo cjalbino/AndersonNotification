@@ -1,6 +1,5 @@
 ﻿using AndersonNotificationFunction;
 using AndersonNotificationModel;
-using System;
 using System.Web.Mvc;
 
 namespace AndersonNotificationWeb.Controllers
@@ -21,27 +20,26 @@ namespace AndersonNotificationWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(EmailNotification notification, string Sender, string Password)
+        public ActionResult Create(EmailNotification notification)
         {
-            FEmailNotification fe = new FEmailNotification();
-            fe.Send(CredentialId,notification, Password);
-            
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    TempData["message"] = "Email has been sent, successfully!";
-                }
-                return RedirectToAction("Create");
-            }
-            catch (Exception )
-            {
-                if (ModelState.IsValid)
-                {
-                    TempData["message"] = "Opps! Something went wrong. Please, try again.";
-                }
-                return RedirectToAction("Create");
-            }
+            _iFEmailNotification.Send(CredentialId,notification);
+            return View(notification);
+            //try
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        TempData["message"] = "Email has been sent, successfully!";
+            //    }
+            //    return RedirectToAction("Create");
+            //}
+            //catch (Exception )
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        TempData["message"] = "Opps! Something went wrong. Please, try again.";
+            //    }
+            //    return RedirectToAction("Create");
+            //}
         }
 
         #endregion

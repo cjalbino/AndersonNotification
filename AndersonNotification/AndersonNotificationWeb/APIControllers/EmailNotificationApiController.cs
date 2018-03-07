@@ -18,10 +18,9 @@ namespace AndersonNotificationWeb.ApiControllers
         }
 
         [HttpPost]
-        public IHttpActionResult Get(EmailNotification emailNotification, string Password)
+        public IHttpActionResult Get(EmailNotification emailNotification)
         {
-            FEmailNotification fe = new FEmailNotification();
-            fe.Send(CredentialId, emailNotification, Password);
+            _iFEmailNotification.Send(CredentialId, emailNotification);
 
             return Ok(emailNotification);
         }
