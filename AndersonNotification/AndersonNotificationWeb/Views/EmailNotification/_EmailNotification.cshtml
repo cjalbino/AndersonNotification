@@ -1,56 +1,66 @@
 ﻿@using AndersonNotificationModel
 @model EmailNotification
 
-<input type="hidden" name="NotificationId" value="@Model.NotificationId" />
+<input type="hidden" name="NotificationId" value="@Model.EmailNotificationId" />
 @{
     Html.RenderPartial("_AuditColumns");
 }
 
-@{
-    if (TempData["message"] != null)
-    {
-        <script type="text/javascript">
-        alert(@Html.Raw(Json.Encode(TempData["message"])));
-        </script>
-    }
-}
-
 <div class="form-group">
-    <label for="Sender">From:</label>
-    <input type="email" class="form-control" name="Sender" placeholder="Sender's Email Address.." value="@Model.Sender" required>
+    <label for="EnableSsl">EnableSsl:</label>
+    <input type="checkbox" class="form-control" name="EnableSsl" checked="@Model.EnableSsl">
 </div>
 
 <div class="form-group">
-    <label for="Password">Sender's Password</label>
-    <input type="password" class="form-control" name="Password" placeholder="Sender's Email Account Password.." required>
-</div>  
+    <label for="EnableSsl">IsBodyHtml:</label>
+    <input type="checkbox" class="form-control" name="IsBodyHtml" checked="@Model.IsBodyHtml">
+</div>
 
 <div class="form-group">
-    <label for="Receiver">To:</label>
-    <input type="email" class="form-control" name="Receiver" placeholder="Receiver's Email Address.." value="@Model.Receiver" required multiple>
+    <label for="Port">Port:</label>
+    <input type="number" class="form-control" name="Port" value="@Model.Port">
+</div>
+
+<div class="form-group">
+    <label for="Sender">Bcc:</label>
+    <input type="email" class="form-control" name="Bcc" placeholder="Sender's Email Address.." value="@Model.Bcc">
 </div>
 
 <div class="form-group">
     <label for="CC">CC:</label>
-    <input type="email" class="form-control" name="CC" placeholder="Sender's Email Address.." value="@Model.CC" multiple>
+    <input type="email" class="form-control" name="CC" placeholder="Sender's Email Address.." value="@Model.CC">
+</div>
+
+<div class="form-group">
+    <label for="Host">Host:</label>
+    <input type="text" class="form-control" name="Host" placeholder="Sender's Email Address.." value="@Model.Host">
+</div>
+
+<div class="form-group">
+    <label for="From">From:</label>
+    <input type="email" class="form-control" name="From" placeholder="Sender's Email Address.." value="@Model.From">
+</div>
+
+<div class="form-group">
+    <label for="Password">Password:</label>
+    <input type="password" class="form-control" name="Password" placeholder="Sender's Email Address..">
 </div>
 
 <div class="form-group">
     <label for="Subject">Subject</label>
-    <input type="text" class="form-control" name="Subject" placeholder="Subject" value="@Model.Subject" required>
+    <input type="text" class="form-control" name="Subject" placeholder="Subject" value="@Model.Subject">
+</div>
+
+<div class="form-group">
+    <label for="To">To:</label>
+    <input type="email" class="form-control" name="To" placeholder="Receiver's Email Address.." value="@Model.To">
 </div>
 
 <div class="form-group">
     <label for="Body">Email Content</label>
-    <textarea class="form-control" rows="10" name="Body" id="comment" placeholder="Message" required></textarea>
+    <textarea class="form-control" rows="10" name="Body" id="comment" placeholder="Body"></textarea>
 </div>
 
 <div class="form-group">
-    <input type="submit" class  ="btn btn-primary" value="Submit" />
+    <input type="submit" class="btn btn-primary" value="Submit" />
 </div>
-
-<style>
-    textarea {
-        resize: none;
-    }
-</style>

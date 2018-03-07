@@ -9,10 +9,6 @@ namespace AndersonNotificationFunction
         EmailNotification Create(int createdBy, EmailNotification emailnotification);
         #endregion
 
-        #region Send
-        EmailNotification Send(int createdBy, EmailNotification emailnotification, string Password);
-        #endregion
-
         #region Read
         EmailNotification Read(int notificationId);
         List<EmailNotification> Read(string sortBy);
@@ -25,9 +21,9 @@ namespace AndersonNotificationFunction
         #region Delete
         void Delete(int notificationId);
         #endregion
-        
-        #region Other Function
 
+        #region Other Function
+        EmailNotification Send(int createdBy, EmailNotification emailnotification);
         #endregion
     }
 }

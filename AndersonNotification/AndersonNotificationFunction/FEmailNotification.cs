@@ -13,9 +13,9 @@ namespace AndersonNotificationFunction
     {
         private IDEmailNotification _iDEmailNotification;
 
-        public FEmailNotification(IDEmailNotification iDNotifications) 
+        public FEmailNotification(IDEmailNotification iDEmailNotifications) 
         {
-            _iDEmailNotification = iDNotifications;
+            _iDEmailNotification = iDEmailNotifications;
         }
 
         public FEmailNotification()
@@ -31,50 +31,24 @@ namespace AndersonNotificationFunction
             eEmailNotification.CreatedBy = createdBy;
             eEmailNotification = _iDEmailNotification.Insert(eEmailNotification);
            
-            return Notification(eEmailNotification);
-        }
-
-        public void Send(object credentialId, EmailNotification emailNotification)
-        {
-            throw new NotImplementedException();
+            return EmailNotification(eEmailNotification);
         }
         #endregion
 
         #region Send
-        public EmailNotification Send(int createdBy,EmailNotification emailNotification, string Password)
-
-        {
-     
-            Create(createdBy, emailNotification);
-            MailMessage email = new MailMessage();
-            email.To.Add(emailNotification.Receiver);
-            email.From = new MailAddress(emailNotification.Sender);
-            email.Subject = emailNotification.Subject;
-            string Body = emailNotification.Body;
-            email.Body = emailNotification.Body;
-            email.CC.Add(emailNotification.CC);
-
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Credentials = new System.Net.NetworkCredential(emailNotification.Sender, Password);
-            smtp.EnableSsl = true;
-            smtp.Send(email);
-
-     return emailNotification;
-        }
         #endregion
 
         #region Read
-        public EmailNotification Read(int notificationId)
+        public EmailNotification Read(int emailNotificationId)
         {
-            var eEmailNotification = _iDEmailNotification.Read<EEmalNotification>(a => a.NotificationId == notificationId);
-            return Notification(eEmailNotification);
+            var eEmailNotification = _iDEmailNotification.Read<EEmalNotification>(a => a.EmailNotificationId == emailNotificationId);
+            return EmailNotification(eEmailNotification);
         }
 
         public List<EmailNotification> Read(string sortBy)
         {
             var eEmailNotifications = _iDEmailNotification.Read<EEmalNotification>(a => true, sortBy);
-            return Notifications(eEmailNotifications);
+            return EmailNotifications(eEmailNotifications);
         }
         #endregion
 
@@ -85,71 +59,112 @@ namespace AndersonNotificationFunction
             eEmailNotification.UpdatedDate = DateTime.Now;
             eEmailNotification.UpdatedBy = updatedBy;
             eEmailNotification = _iDEmailNotification.Update(eEmailNotification);
-            return Notification(eEmailNotification);
+            return EmailNotification(eEmailNotification);
         }
         #endregion
 
         #region Delete
-        public void Delete(int notificationId)
+        public void Delete(int emailNotificationId)
         {
-            _iDEmailNotification.Delete<EEmalNotification>(a => a.NotificationId == notificationId);
+            _iDEmailNotification.Delete<EEmalNotification>(a => a.EmailNotificationId == emailNotificationId);
         }
         #endregion
 
         #region Other Function
-        private EEmalNotification EEmailNotification(EmailNotification emailnotification)
+        public EmailNotification Send(int createdBy, EmailNotification emailNotification)
+        {
+            MailMessage email = new MailMessage();
+            email.IsBodyHtml = emailNotification.IsBodyHtml;
+            email.Body = emailNotification.Body;
+            if (!string.IsNullOrEmpty(emailNotification.Bcc))
+                email.Bcc.Add(emailNotification.Bcc);
+            if (!string.IsNullOrEmpty(emailNotification.CC))
+                email.CC.Add(emailNotification.CC);
+            email.From = new MailAddress(emailNotification.From);
+            email.Subject = emailNotification.Subject;
+            email.To.Add(emailNotification.To);
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = emailNotification.Host;
+            smtp.Credentials = new NetworkCredential(emailNotification.Username, emailNotification.Password);
+            smtp.EnableSsl = emailNotification.EnableSsl;
+            smtp.Send(email);
+            Create(createdBy, emailNotification);
+
+            return emailNotification;
+        }
+
+        private EEmalNotification EEmailNotification(EmailNotification emailNotification)
         {
             return new EEmalNotification
             {
-                CreatedDate = emailnotification.CreatedDate,
-                UpdatedDate = emailnotification.UpdatedDate,
+                EnableSsl = emailNotification.EnableSsl,
+                IsBodyHtml = emailNotification.IsBodyHtml,
 
-                CreatedBy = emailnotification.CreatedBy,
-                UpdatedBy = emailnotification.UpdatedBy,
+                CreatedDate = emailNotification.CreatedDate,
+                UpdatedDate = emailNotification.UpdatedDate,
 
-                NotificationId = emailnotification.NotificationId,
-  Sender = emailnotification.Sender,
-                CC = emailnotification.CC,
-                Receiver = emailnotification.Receiver,
-                Subject = emailnotification.Subject,
-                Body = emailnotification.Body,
+                CreatedBy = emailNotification.CreatedBy,
+                EmailNotificationId = emailNotification.EmailNotificationId,
+                UpdatedBy = emailNotification.UpdatedBy,
+
+                Body = emailNotification.Body,
+                Bcc = emailNotification.Bcc,
+                CC = emailNotification.CC,
+                Host = emailNotification.Host,
+                From = emailNotification.From,
+                Subject = emailNotification.Subject,
+                To = emailNotification.To,
+                Username = emailNotification.Username,
             };
         }
 
-        private EmailNotification Notification(EEmalNotification eemailnotification)
+        private EmailNotification EmailNotification(EEmalNotification eEmailNotification)
         {
             return new EmailNotification
             {
-                CreatedDate = eemailnotification.CreatedDate,
-                UpdatedDate = eemailnotification.UpdatedDate,
+                EnableSsl = eEmailNotification.EnableSsl,
+                IsBodyHtml = eEmailNotification.IsBodyHtml,
 
-                CreatedBy = eemailnotification.CreatedBy,
-                UpdatedBy = eemailnotification.UpdatedBy,
-                CC = eemailnotification.CC,
-                NotificationId = eemailnotification.NotificationId,
-                Sender = eemailnotification.Sender,
-               
-                Receiver = eemailnotification.Receiver,
-                Subject = eemailnotification.Subject,
-                Body = eemailnotification.Body,
+                CreatedDate = eEmailNotification.CreatedDate,
+                UpdatedDate = eEmailNotification.UpdatedDate,
+
+                CreatedBy = eEmailNotification.CreatedBy,
+                EmailNotificationId = eEmailNotification.EmailNotificationId,
+                UpdatedBy = eEmailNotification.UpdatedBy,
+
+                Body = eEmailNotification.Body,
+                Bcc = eEmailNotification.Bcc,
+                CC = eEmailNotification.CC,
+                Host = eEmailNotification.Host,
+                From = eEmailNotification.From,
+                Subject = eEmailNotification.Subject,
+                To = eEmailNotification.To,
+                Username = eEmailNotification.Username,
             };
         }
-        private List<EmailNotification> Notifications(List<EEmalNotification> eemailnotifications)
+        private List<EmailNotification> EmailNotifications(List<EEmalNotification> eEmailNotifications)
         {
-            return eemailnotifications.Select(a => new EmailNotification
+            return eEmailNotifications.Select(a => new EmailNotification
             {
+                EnableSsl = a.EnableSsl,
+                IsBodyHtml = a.IsBodyHtml,
+
                 CreatedDate = a.CreatedDate,
                 UpdatedDate = a.UpdatedDate,
 
                 CreatedBy = a.CreatedBy,
+                EmailNotificationId = a.EmailNotificationId,
                 UpdatedBy = a.UpdatedBy,
 
-                NotificationId = a.NotificationId,
-                Sender = a.Sender,
-                CC = a.CC,
-                Receiver = a.Receiver,
-                Subject = a.Subject,
                 Body = a.Body,
+                Bcc = a.Bcc,
+                CC = a.CC,
+                Host = a.Host,
+                From = a.From,
+                Subject = a.Subject,
+                To = a.To,
+                Username = a.Username,
             }).ToList();
         }
         #endregion
